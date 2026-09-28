@@ -1,0 +1,22 @@
+name: Build and Test
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Show Xcode version
+        run: xcodebuild -version
+      - name: Build app and run unit tests
+        run: >-
+          xcodebuild test
+          -project Maccy.xcodeproj
+          -scheme Maccy
+          -destination 'platform=macOS'
+          -only-testing:MaccyTests
+          CODE_SIGNING_ALLOWED=NO
